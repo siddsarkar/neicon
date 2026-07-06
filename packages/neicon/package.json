@@ -1,0 +1,38 @@
+{
+  "name": "neicon",
+  "version": "0.1.0",
+  "description": "Neubrutalism-inspired icons (colored + black & white) as framework-agnostic SVG data + metadata.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "keywords": ["icons", "svg", "icon-library", "neicon", "neubrutalism", "neobrutalism", "brutalist", "brutalism"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "gen": "node scripts/generate.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "prepublishOnly": "node scripts/generate.mjs && tsc -p tsconfig.build.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/siddsarkar/neicon#readme",
+  "bugs": "https://github.com/siddsarkar/neicon/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siddsarkar/neicon.git",
+    "directory": "packages/neicon"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.2"
+  }
+}

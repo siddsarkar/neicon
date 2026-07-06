@@ -1,0 +1,46 @@
+{
+  "name": "neicon-react",
+  "version": "0.1.0",
+  "description": "Neubrutalism-inspired icons (colored + black & white) as tree-shakeable React components.",
+  "type": "module",
+  "license": "MIT",
+  "sideEffects": false,
+  "keywords": ["icons", "react", "svg", "icon-library", "neicon", "neubrutalism", "neobrutalism", "brutalist", "brutalism"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./all": {
+      "types": "./dist/all.d.ts",
+      "import": "./dist/all.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "gen": "node scripts/generate.mjs",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "prepublishOnly": "node scripts/generate.mjs && tsc -p tsconfig.build.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/siddsarkar/neicon#readme",
+  "bugs": "https://github.com/siddsarkar/neicon/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siddsarkar/neicon.git",
+    "directory": "packages/neicon-react"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "typescript": "~6.0.2"
+  }
+}

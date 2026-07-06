@@ -5,6 +5,7 @@
     "": {
       "name": "neicon",
       "dependencies": {
+        "neicon-react": "workspace:*",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",
       },
@@ -21,6 +22,24 @@
         "typescript": "~6.0.2",
         "typescript-eslint": "^8.62.0",
         "vite": "^8.1.1",
+      },
+    },
+    "packages/neicon": {
+      "name": "neicon",
+      "version": "0.1.0",
+      "devDependencies": {
+        "typescript": "~6.0.2",
+      },
+    },
+    "packages/neicon-react": {
+      "name": "neicon-react",
+      "version": "0.1.0",
+      "devDependencies": {
+        "@types/react": "^19.2.17",
+        "typescript": "~6.0.2",
+      },
+      "peerDependencies": {
+        "react": ">=18",
       },
     },
   },
@@ -314,6 +333,10 @@
     "nanoid": ["nanoid@3.3.15", "", { "bin": { "nanoid": "bin/nanoid.cjs" } }, "sha512-y7Wygv/7mEOvxTuEQDB8StXdMRBWf1kR/tlhAzBRUFkB2jfcLOAxO/SHmOO2zgz1pVgK29/kyupn059/bCHdjA=="],
 
     "natural-compare": ["natural-compare@1.4.0", "", {}, "sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw=="],
+
+    "neicon": ["neicon@workspace:packages/neicon"],
+
+    "neicon-react": ["neicon-react@workspace:packages/neicon-react"],
 
     "node-releases": ["node-releases@2.0.50", "", {}, "sha512-J6l92tKHX6w8Jy5nO1Vuc01NoIiRGi/d6qBKVxh+IQ8Cr3b6HbVNfKiF8ZpFKufTwpwxMmce2W3iQZ861ZRyTg=="],
 

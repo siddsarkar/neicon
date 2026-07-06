@@ -1,0 +1,45 @@
+# neicon
+
+Neubrutalism-inspired icons — bold offset frames, hard edges, high contrast —
+each in a **colored** default and a **black & white** variant, as
+framework-agnostic SVG data. Use it in vanilla JS, or as the data layer behind a
+framework wrapper. For React components, see
+[`neicon-react`](https://www.npmjs.com/package/neicon-react).
+
+- **68 icons** across 9 categories, in a neubrutalist / neo-brutalism style.
+- Ships raw SVG strings + searchable metadata. No dependencies.
+
+## Install
+
+```sh
+npm i neicon
+```
+
+## Usage
+
+```js
+import { getIcon } from 'neicon'
+
+// Inject an icon into the DOM
+document.querySelector('#logo').innerHTML = getIcon('check', { size: 32 })
+
+// Black & white variant
+element.innerHTML = getIcon('down-arrow', { variant: 'B&W', size: 24 })
+```
+
+### API
+
+```ts
+getIcon(name, options?): string | undefined
+//   name: kebab-case id, e.g. "down-arrow"
+//   options.variant: "Colored" (default) | "B&W"
+//   options.size:    number (px) | string — overrides width & height
+
+iconData: Record<string, Record<Variant, string>>  // raw SVG by name → variant
+icons:      IconMeta[]                              // { name, component, category, description, variants }
+categories: readonly string[]                       // ordered category keys
+```
+
+## Browse
+
+All icons, searchable, in the [explorer app](../../README.md).
