@@ -6,6 +6,10 @@ framework-agnostic SVG data. Use it in vanilla JS, or as the data layer behind a
 framework wrapper. For React components, see
 [`neicon-react`](https://www.npmjs.com/package/neicon-react).
 
+📖 Full docs: [vanilla usage](https://github.com/siddsarkar/neicon/blob/main/docs/javascript/usage.md)
+· [variants](https://github.com/siddsarkar/neicon/blob/main/docs/shared/variants.md)
+· [icon catalog](https://github.com/siddsarkar/neicon/blob/main/docs/shared/icons.md)
+
 - **68 icons** across 9 categories, in a neubrutalist / neo-brutalism style.
 - Ships raw SVG strings + searchable metadata. No dependencies.
 

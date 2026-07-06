@@ -5,6 +5,10 @@ tree-shakeable React components. Every icon ships in two variants — a **colore
 default and a **black & white** version — driven by a single `monochrome` prop.
 For vanilla JS / raw SVG data, see [`neicon`](https://www.npmjs.com/package/neicon).
 
+📖 Full docs: [react usage](https://github.com/siddsarkar/neicon/blob/main/docs/react/usage.md)
+· [variants](https://github.com/siddsarkar/neicon/blob/main/docs/shared/variants.md)
+· [icon catalog](https://github.com/siddsarkar/neicon/blob/main/docs/shared/icons.md)
+
 ## Install
 
 ```sh

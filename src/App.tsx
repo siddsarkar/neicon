@@ -15,6 +15,17 @@ const CATEGORY_LABELS: Record<string, string> = {
   numbers: 'Numbers',
 }
 
+const REACT_SNIPPET = `import { Check, DownArrow } from 'neicon-react'
+
+<Check />              // colored (default)
+<Check monochrome />   // black & white
+<Check size={32} />    // any size`
+
+const VANILLA_SNIPPET = `import { getIcon } from 'neicon'
+
+el.innerHTML = getIcon('check', { size: 32 })
+el.innerHTML = getIcon('check', { variant: 'B&W' })`
+
 function App() {
   const [query, setQuery] = useState('')
   const [mono, setMono] = useState(false)
@@ -48,12 +59,11 @@ function App() {
 
   const total = grouped.reduce((n, g) => n + g.items.length, 0)
 
-  const copy = async (component: string) => {
-    const snippet = `import { ${component} } from '@neicon/react'`
+  const copy = async (text: string, key: string) => {
     try {
-      await navigator.clipboard.writeText(snippet)
-      setCopied(component)
-      window.setTimeout(() => setCopied((c) => (c === component ? null : c)), 1400)
+      await navigator.clipboard.writeText(text)
+      setCopied(key)
+      window.setTimeout(() => setCopied((c) => (c === key ? null : c)), 1400)
     } catch {
       setCopied(null)
     }
@@ -104,6 +114,37 @@ function App() {
         </div>
       </header>
 
+      <section className="usage" aria-label="Install and usage">
+        {[
+          { lang: 'React', pkg: 'neicon-react', snippet: REACT_SNIPPET, key: 'react' },
+          { lang: 'Vanilla JS', pkg: 'neicon', snippet: VANILLA_SNIPPET, key: 'vanilla' },
+        ].map(({ lang, pkg, snippet, key }) => (
+          <article key={key} className="usage-card">
+            <header className="usage-head">
+              <span className="usage-lang">{lang}</span>
+              <button
+                type="button"
+                className="install"
+                onClick={() => copy(`npm i ${pkg}`, `i-${key}`)}
+                title={`Copy: npm i ${pkg}`}
+              >
+                {copied === `i-${key}` ? '✓ copied' : `npm i ${pkg}`}
+              </button>
+            </header>
+            <pre className="snippet">
+              <button
+                type="button"
+                className="copy-code"
+                onClick={() => copy(snippet, `u-${key}`)}
+              >
+                {copied === `u-${key}` ? 'Copied!' : 'Copy'}
+              </button>
+              <code>{snippet}</code>
+            </pre>
+          </article>
+        ))}
+      </section>
+
       <div className="searchbar">
         <input
           type="search"
@@ -142,8 +183,10 @@ function App() {
                     key={icon.name}
                     type="button"
                     className={`tile${isCopied ? ' copied' : ''}`}
-                    onClick={() => copy(icon.component)}
-                    title={`Click to copy: import { ${icon.component} } from '@neicon/react'`}
+                    onClick={() =>
+                      copy(`import { ${icon.component} } from 'neicon-react'`, icon.component)
+                    }
+                    title={`Click to copy: import { ${icon.component} } from 'neicon-react'`}
                     aria-label={`${icon.component} icon. Click to copy import.`}
                   >
                     <span className="tile-icon" style={{ height: 48 }}>
@@ -161,7 +204,7 @@ function App() {
       </main>
 
       <footer className="foot">
-        <code>import {'{ '}Check, DownArrow{' }'} from '@neicon/react'</code>
+        <code>import {'{ '}Check, DownArrow{' }'} from 'neicon-react'</code>
       </footer>
     </div>
   )
