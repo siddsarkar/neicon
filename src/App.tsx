@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, type CSSProperties } from 'react'
 import { iconComponents, icons, categories } from 'neicon-react/all'
 import './App.css'
 
@@ -14,6 +14,23 @@ const CATEGORY_LABELS: Record<string, string> = {
   letters: 'Letters',
   numbers: 'Numbers',
 }
+
+// Curated showcase for the hero sticker wall — recognizable icons spanning
+// most categories. Tilt values are fixed per position so the wall is stable.
+const HERO_STICKERS: { name: string; tilt: number }[] = [
+  { name: 'check', tilt: -4 },
+  { name: 'bookmark', tilt: 3 },
+  { name: 'mail', tilt: -2 },
+  { name: 'play', tilt: 4 },
+  { name: 'folder', tilt: -3 },
+  { name: 'pie-chart', tilt: 2 },
+  { name: 'credit-card', tilt: -2 },
+  { name: 'photo', tilt: 3 },
+  { name: 'up-arrow', tilt: -4 },
+  { name: 'message', tilt: 2 },
+  { name: 'download', tilt: -3 },
+  { name: 'hashtag', tilt: 4 },
+]
 
 const REACT_SNIPPET = `import { Check, DownArrow } from 'neicon-react'
 
@@ -77,47 +94,84 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-mark" aria-hidden="true">
-            <BrandIcon size={40} />
+    <div className="app" id="top">
+      <nav className="nav">
+        <a className="wordmark" href="#top">
+          <span className="wordmark-mark" aria-hidden="true">
+            <BrandIcon size={24} monochrome />
           </span>
-          <div className="brand-text">
-            <h1>neicon</h1>
-            <p>{icons.length} neubrutalism-inspired icons for React</p>
+          neicon
+        </a>
+        <div className="nav-links">
+          <a
+            className="pill-link"
+            href="https://github.com/siddsarkar/neicon"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub ↗
+          </a>
+          <a
+            className="pill-link"
+            href="https://www.npmjs.com/package/neicon-react"
+            target="_blank"
+            rel="noreferrer"
+          >
+            npm ↗
+          </a>
+          <a className="pill-link pill-link--solid" href="#browse">
+            Browse icons ↓
+          </a>
+        </div>
+      </nav>
+
+      <header className="hero">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            {icons.length} icons · React · Vanilla · CDN · MIT
+          </p>
+          <h1 className="hero-title">
+            Grab an icon.
+            <br />
+            Ship it.
+          </h1>
+          <p className="hero-sub">
+            neicon is {icons.length} neubrutalism-styled icons for React, vanilla
+            JS, or a CDN one-liner. Search below, click any tile, and the import
+            lands on your clipboard.
+          </p>
+          <div className="hero-actions">
+            <button
+              type="button"
+              className="cmd"
+              onClick={() => copy('npm i neicon-react', 'hero-npm')}
+              title="Copy install command"
+            >
+              <span className="cmd-prompt">$</span>
+              <span className="cmd-text">
+                {copied === 'hero-npm' ? 'copied to clipboard' : 'npm i neicon-react'}
+              </span>
+            </button>
+            <a className="btn-ghost" href="#browse">
+              Browse all {icons.length}
+            </a>
           </div>
         </div>
 
-        <div className="controls">
-          <div className="segmented" role="group" aria-label="Variant">
-            <button
-              type="button"
-              className={!mono ? 'active' : ''}
-              onClick={() => setMono(false)}
-            >
-              Colored
-            </button>
-            <button
-              type="button"
-              className={mono ? 'active' : ''}
-              onClick={() => setMono(true)}
-            >
-              B&amp;W
-            </button>
-          </div>
-          <div className="segmented" role="group" aria-label="Size">
-            {SIZES.map((s) => (
-              <button
-                key={s}
-                type="button"
-                className={size === s ? 'active' : ''}
-                onClick={() => setSize(s)}
+        <div className="hero-stickers" aria-hidden="true">
+          {HERO_STICKERS.map(({ name, tilt }) => {
+            const Sticker = iconComponents[name]
+            if (!Sticker) return null
+            return (
+              <span
+                key={name}
+                className="sticker"
+                style={{ '--tilt': `${tilt}deg` } as CSSProperties}
               >
-                {s}
-              </button>
-            ))}
-          </div>
+                <Sticker size={40} />
+              </span>
+            )
+          })}
         </div>
       </header>
 
@@ -153,18 +207,50 @@ function App() {
         ))}
       </section>
 
-      <div className="searchbar">
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search icons — try “arrow”, “chart”, “letter a”…"
-          autoFocus
-          aria-label="Search icons"
-        />
-        <span className="count">
-          {total} {total === 1 ? 'result' : 'results'}
-        </span>
+      <div className="toolbar" id="browse">
+        <div className="searchbar">
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search 68 icons — try “arrow”, “chart”, “letter a”…"
+            aria-label="Search icons"
+          />
+          <span className="count">
+            {total} {total === 1 ? 'result' : 'results'}
+          </span>
+        </div>
+
+        <div className="controls">
+          <div className="segmented" role="group" aria-label="Variant">
+            <button
+              type="button"
+              className={!mono ? 'active' : ''}
+              onClick={() => setMono(false)}
+            >
+              Colored
+            </button>
+            <button
+              type="button"
+              className={mono ? 'active' : ''}
+              onClick={() => setMono(true)}
+            >
+              B&amp;W
+            </button>
+          </div>
+          <div className="segmented" role="group" aria-label="Size">
+            {SIZES.map((s) => (
+              <button
+                key={s}
+                type="button"
+                className={size === s ? 'active' : ''}
+                onClick={() => setSize(s)}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <main className="results">
@@ -180,7 +266,8 @@ function App() {
         {grouped.map((group) => (
           <section key={group.category} className="group">
             <h2>
-              {group.label} <span>{group.items.length}</span>
+              <span className="group-label">{group.label}</span>
+              <span className="group-count">{group.items.length}</span>
             </h2>
             <div className="grid">
               {group.items.map((icon) => {
@@ -197,7 +284,7 @@ function App() {
                     title={`Click to copy: import { ${icon.component} } from 'neicon-react'`}
                     aria-label={`${icon.component} icon. Click to copy import.`}
                   >
-                    <span className="tile-icon" style={{ height: 48 }}>
+                    <span className="tile-icon">
                       <Icon size={size} monochrome={mono} />
                     </span>
                     <span className="tile-name">
@@ -212,7 +299,11 @@ function App() {
       </main>
 
       <footer className="foot">
+        <span className="foot-mark" aria-hidden="true">
+          <BrandIcon size={20} monochrome />
+        </span>
         <code>import {'{ '}Check, DownArrow{' }'} from 'neicon-react'</code>
+        <span className="foot-meta">MIT · v0.1.0</span>
       </footer>
     </div>
   )

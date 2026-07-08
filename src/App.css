@@ -1,102 +1,222 @@
-/* Icon explorer — reuses the CSS variables from index.css */
-
-#root {
-  width: min(1160px, 100%);
-  text-align: left;
-}
+/* ===========================================================================
+   neicon explorer — neobrutalism.dev styling
+   Structure: 2px black borders · 5px radius · hard 4px offset shadows.
+   Signature interaction: pressable elements slide into their shadow on hover
+   and flatten it on click — the whole UI feels like the physical act of
+   grabbing a sticker off a sheet.
+   =========================================================================== */
 
 .app {
-  display: flex;
-  flex-direction: column;
-  min-height: 100svh;
-  padding: 0 24px 64px;
-  box-sizing: border-box;
+  width: min(1200px, 100%);
+  margin-inline: auto;
+  padding: 0 20px 80px;
 }
 
-/* ---- top bar ---- */
-.topbar {
+/* --- shared press physics ------------------------------------------------- */
+.cmd,
+.btn-ghost,
+.pill-link,
+.install,
+.copy-code,
+.segmented button,
+.empty button,
+.tile {
+  transition: transform 0.11s ease, box-shadow 0.11s ease, background 0.11s ease,
+    color 0.11s ease;
+}
+.cmd:hover,
+.btn-ghost:hover,
+.pill-link:hover,
+.install:hover,
+.segmented button.active:hover,
+.empty button:hover,
+.tile:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 0 var(--border);
+}
+.cmd:active,
+.btn-ghost:active,
+.pill-link:active,
+.install:active,
+.empty button:active,
+.tile:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 0 var(--border);
+}
+
+/* --- top nav -------------------------------------------------------------- */
+.nav {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 30;
+  height: var(--nav-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  padding: 20px 0 16px;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
+  gap: 16px;
+  background: var(--secondary-background);
+  border-bottom: var(--bw) solid var(--border);
+  /* bleed the border edge-to-edge over the 20px page gutters */
+  margin: 0 -20px;
+  padding: 0 20px;
 }
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.brand-mark {
+.wordmark {
   display: inline-flex;
-  padding: 6px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--code-bg);
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-size: 22px;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  color: var(--foreground);
 }
-.brand-text h1 {
-  font-size: 30px;
-  margin: 0;
-  letter-spacing: -1px;
-  line-height: 1;
+.wordmark-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  background: var(--main);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 2px 2px 0 0 var(--border);
 }
-.brand-text p {
-  font-size: 14px;
-  margin-top: 4px;
-  color: var(--text);
-}
-
-.controls {
+.nav-links {
   display: flex;
   gap: 10px;
-  flex-wrap: wrap;
+}
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  font: var(--fw-heading) 13px var(--sans);
+  text-decoration: none;
+  color: var(--foreground);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 7px 13px;
+  box-shadow: var(--shadow);
+}
+.pill-link--solid {
+  background: var(--main);
+  color: var(--main-foreground);
 }
 
-.segmented {
+/* --- hero ----------------------------------------------------------------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 32px;
+  align-items: center;
+  margin-top: 28px;
+  padding: 40px;
+  background: var(--main);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+.eyebrow {
+  display: inline-block;
+  font: var(--fw-heading) 12px var(--mono);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--foreground);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 5px 10px;
+  box-shadow: 2px 2px 0 0 var(--border);
+}
+.hero-title {
+  font-family: var(--display);
+  font-size: clamp(40px, 6.4vw, 68px);
+  line-height: 0.95;
+  letter-spacing: -1.5px;
+  color: var(--main-foreground);
+  margin: 20px 0 16px;
+}
+.hero-sub {
+  max-width: 42ch;
+  font-size: 16px;
+  font-weight: var(--fw-base);
+  line-height: 1.55;
+  color: var(--main-foreground);
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.cmd {
   display: inline-flex;
-  padding: 3px;
-  gap: 2px;
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
-.segmented button {
-  font: 500 14px var(--sans);
-  color: var(--text);
-  background: transparent;
-  border: 0;
-  border-radius: 7px;
-  padding: 6px 14px;
+  align-items: center;
+  gap: 10px;
+  font: var(--fw-heading) 14px var(--mono);
+  color: var(--foreground);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 16px;
   cursor: pointer;
-  transition: background 0.12s, color 0.12s;
+  box-shadow: var(--shadow);
 }
-.segmented button:hover {
-  color: var(--text-h);
+.cmd-prompt {
+  color: var(--main);
+  -webkit-text-stroke: 0.4px var(--border);
 }
-.segmented button.active {
-  background: var(--bg);
-  color: var(--text-h);
+.cmd-text {
+  min-width: 15ch;
+  text-align: left;
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  font: var(--fw-heading) 14px var(--sans);
+  text-decoration: none;
+  color: var(--main-foreground);
+  background: transparent;
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 11px 16px;
   box-shadow: var(--shadow);
 }
 
-/* ---- install & usage ---- */
+/* sticker wall — the signature: neicon's own icons as peelable stickers */
+.hero-stickers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.sticker {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  rotate: var(--tilt, 0deg);
+  transition: rotate 0.18s ease, box-shadow 0.18s ease;
+}
+.hero-stickers:hover .sticker {
+  rotate: 0deg;
+}
+.sticker:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* --- install & usage ------------------------------------------------------ */
 .usage {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 12px;
-  margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 16px;
+  margin-top: 28px;
 }
 .usage-card {
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--code-bg);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   overflow: hidden;
 }
 .usage-head {
@@ -104,191 +224,289 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
+  padding: 11px 14px;
+  background: var(--main);
+  border-bottom: var(--bw) solid var(--border);
 }
 .usage-lang {
-  font: 600 12px var(--sans);
-  color: var(--text-h);
+  font: var(--fw-heading) 12px var(--sans);
+  color: var(--main-foreground);
   text-transform: uppercase;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
 }
 .install {
-  font: 12px var(--mono);
-  color: var(--text-h);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 7px;
+  font: var(--fw-base) 12px var(--mono);
+  color: var(--foreground);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
   padding: 5px 10px;
   cursor: pointer;
-  transition: border-color 0.12s, color 0.12s;
-}
-.install:hover {
-  border-color: var(--accent-border);
-  color: var(--accent);
+  box-shadow: 2px 2px 0 0 var(--border);
 }
 .snippet {
   position: relative;
   margin: 0;
-  padding: 14px;
+  padding: 16px;
   overflow-x: auto;
+  background: var(--secondary-background);
 }
 .snippet code {
   display: block;
-  font: 13px/1.7 var(--mono);
-  color: var(--text-h);
-  background: none;
-  padding: 0;
+  font: var(--fw-base) 13px/1.7 var(--mono);
+  color: var(--foreground);
   white-space: pre;
 }
 .copy-code {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  font: 11px var(--sans);
-  color: var(--text);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 3px 8px;
+  top: 10px;
+  right: 10px;
+  font: var(--fw-heading) 11px var(--sans);
+  color: var(--main-foreground);
+  background: var(--main);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px 9px;
   cursor: pointer;
+  box-shadow: 2px 2px 0 0 var(--border);
   opacity: 0;
-  transition: opacity 0.12s, color 0.12s, border-color 0.12s;
 }
 .usage-card:hover .copy-code,
 .copy-code:focus-visible {
   opacity: 1;
 }
-.copy-code:hover {
-  color: var(--accent);
-  border-color: var(--accent-border);
-}
 
-/* ---- search ---- */
+/* --- sticky search + filter toolbar -------------------------------------- */
+.toolbar {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin: 34px -20px 0;
+  padding: 16px 20px;
+  background: var(--background);
+  border-top: var(--bw) solid var(--border);
+  border-bottom: var(--bw) solid var(--border);
+}
 .searchbar {
   position: relative;
+  flex: 1 1 320px;
   display: flex;
   align-items: center;
-  margin: 24px 0 8px;
 }
 .searchbar input {
   flex: 1;
-  font: 17px var(--sans);
-  color: var(--text-h);
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 14px 110px 14px 18px;
+  font: var(--fw-base) 16px var(--sans);
+  color: var(--foreground);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 13px 108px 13px 16px;
+  box-shadow: var(--shadow);
   outline: none;
-  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.searchbar input::placeholder {
+  color: var(--muted);
 }
 .searchbar input:focus {
-  border-color: var(--accent-border);
-  box-shadow: 0 0 0 4px var(--accent-bg);
+  box-shadow: 2px 2px 0 0 var(--border);
+  transform: translate(2px, 2px);
 }
 .searchbar .count {
   position: absolute;
-  right: 16px;
-  font: 13px var(--mono);
-  color: var(--text);
+  right: 14px;
+  font: var(--fw-heading) 12px var(--mono);
+  color: var(--muted);
   pointer-events: none;
 }
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.segmented {
+  display: inline-flex;
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.segmented button {
+  font: var(--fw-heading) 13px var(--sans);
+  color: var(--foreground);
+  background: transparent;
+  border: 0;
+  border-right: var(--bw) solid var(--border);
+  padding: 9px 15px;
+  cursor: pointer;
+}
+.segmented button:last-child {
+  border-right: 0;
+}
+.segmented button.active {
+  background: var(--main);
+  color: var(--main-foreground);
+}
 
-/* ---- results ---- */
+/* --- results -------------------------------------------------------------- */
 .results {
-  flex: 1;
+  margin-top: 8px;
 }
 .group {
-  margin-top: 32px;
+  margin-top: 40px;
 }
 .group h2 {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: var(--text);
-  margin: 0 0 14px;
+  gap: 10px;
+  margin: 0 0 16px;
 }
-.group h2 span {
-  font: 12px var(--mono);
-  color: var(--text-h);
-  background: var(--code-bg);
-  border-radius: 20px;
-  padding: 2px 9px;
+.group-label {
+  font: var(--fw-heading) 14px var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--foreground);
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 5px 12px;
+  box-shadow: 2px 2px 0 0 var(--border);
+}
+.group-count {
+  font: var(--fw-heading) 12px var(--mono);
+  color: var(--main-foreground);
+  background: var(--main);
+  border: var(--bw) solid var(--border);
+  border-radius: 999px;
+  min-width: 26px;
+  text-align: center;
+  padding: 3px 8px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 14px;
 }
-
 .tile {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 18px 10px 12px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  gap: 14px;
+  padding: 20px 10px 14px;
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: border-color 0.12s, transform 0.12s, background 0.12s;
-}
-.tile:hover {
-  border-color: var(--accent-border);
-  transform: translateY(-2px);
 }
 .tile.copied {
-  border-color: var(--accent-border);
-  background: var(--accent-bg);
+  background: var(--main);
 }
 .tile-icon {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 48px;
 }
 .tile-name {
   max-width: 100%;
-  font: 12px var(--mono);
-  color: var(--text);
+  font: var(--fw-base) 12px var(--mono);
+  color: var(--muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .tile.copied .tile-name {
-  color: var(--accent);
-  font-weight: 600;
+  color: var(--main-foreground);
+  font-weight: var(--fw-heading);
 }
 
-/* ---- empty + footer ---- */
+/* --- empty + footer ------------------------------------------------------- */
 .empty {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   padding: 80px 0;
-  color: var(--text);
+  color: var(--foreground);
 }
 .empty button {
-  font: 500 14px var(--sans);
-  color: var(--text-h);
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 8px 16px;
+  font: var(--fw-heading) 14px var(--sans);
+  color: var(--main-foreground);
+  background: var(--main);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 18px;
   cursor: pointer;
+  box-shadow: var(--shadow);
 }
 
 .foot {
-  margin-top: 48px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 56px;
+  padding: 20px;
+  background: var(--secondary-background);
+  border: var(--bw) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.foot-mark {
+  display: inline-grid;
+  place-items: center;
 }
 .foot code {
-  font-size: 13px;
+  font: var(--fw-base) 13px var(--mono);
+  color: var(--foreground);
+}
+.foot-meta {
+  margin-left: auto;
+  font: var(--fw-heading) 12px var(--mono);
+  color: var(--muted);
+}
+
+/* --- responsive ----------------------------------------------------------- */
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 28px 22px;
+    gap: 26px;
+  }
+  .hero-stickers {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media (max-width: 560px) {
+  /* the nav's solid pill duplicates the hero CTA — drop it so the bar
+     never overflows on a phone, and tighten the remaining links */
+  .pill-link--solid {
+    display: none;
+  }
+  .wordmark {
+    font-size: 19px;
+  }
+  .pill-link {
+    padding: 6px 10px;
+  }
+}
+@media (max-width: 480px) {
+  .hero-stickers {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .nav {
+    gap: 8px;
+  }
+  .cmd,
+  .btn-ghost {
+    flex: 1;
+    justify-content: center;
+  }
 }
