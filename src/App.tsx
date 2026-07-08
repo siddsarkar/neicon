@@ -26,6 +26,13 @@ const VANILLA_SNIPPET = `import { getIcon } from 'neicon'
 el.innerHTML = getIcon('check', { size: 32 })
 el.innerHTML = getIcon('check', { variant: 'B&W' })`
 
+const CDN_SNIPPET = `<script type="module">
+  import { getIcon } from
+    'https://cdn.jsdelivr.net/npm/neicon/+esm'
+
+  el.innerHTML = getIcon('check', { size: 48 })
+</script>`
+
 function App() {
   const [query, setQuery] = useState('')
   const [mono, setMono] = useState(false)
@@ -116,19 +123,20 @@ function App() {
 
       <section className="usage" aria-label="Install and usage">
         {[
-          { lang: 'React', pkg: 'neicon-react', snippet: REACT_SNIPPET, key: 'react' },
-          { lang: 'Vanilla JS', pkg: 'neicon', snippet: VANILLA_SNIPPET, key: 'vanilla' },
-        ].map(({ lang, pkg, snippet, key }) => (
+          { lang: 'React', pill: 'npm i neicon-react', pillCopy: 'npm i neicon-react', snippet: REACT_SNIPPET, key: 'react' },
+          { lang: 'Vanilla JS', pill: 'npm i neicon', pillCopy: 'npm i neicon', snippet: VANILLA_SNIPPET, key: 'vanilla' },
+          { lang: 'CDN · no build', pill: 'jsdelivr +esm', pillCopy: 'https://cdn.jsdelivr.net/npm/neicon/+esm', snippet: CDN_SNIPPET, key: 'cdn' },
+        ].map(({ lang, pill, pillCopy, snippet, key }) => (
           <article key={key} className="usage-card">
             <header className="usage-head">
               <span className="usage-lang">{lang}</span>
               <button
                 type="button"
                 className="install"
-                onClick={() => copy(`npm i ${pkg}`, `i-${key}`)}
-                title={`Copy: npm i ${pkg}`}
+                onClick={() => copy(pillCopy, `i-${key}`)}
+                title={`Copy: ${pillCopy}`}
               >
-                {copied === `i-${key}` ? '✓ copied' : `npm i ${pkg}`}
+                {copied === `i-${key}` ? '✓ copied' : pill}
               </button>
             </header>
             <pre className="snippet">

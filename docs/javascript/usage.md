@@ -14,6 +14,28 @@ npm i neicon
 # or: bun add neicon / pnpm add neicon / yarn add neicon
 ```
 
+## Use from a CDN (no build step)
+
+Published versions are mirrored to the JS CDNs. For browser ESM, jsDelivr's
+`+esm` endpoint returns a single bundled module — no bundler required:
+
+```html
+<div id="icon"></div>
+<script type="module">
+  import { getIcon } from 'https://cdn.jsdelivr.net/npm/neicon@0.1.0/+esm'
+  document.getElementById('icon').innerHTML = getIcon('check', { size: 48 })
+</script>
+```
+
+esm.sh and unpkg work too:
+
+```js
+import { getIcon } from 'https://esm.sh/neicon@0.1.0'
+import { getIcon } from 'https://unpkg.com/neicon@0.1.0/dist/index.js'
+```
+
+Pin a version (`@0.1.0`) in production; omit it to always get the latest.
+
 ## Get an icon's SVG
 
 `getIcon(name, options?)` returns the raw SVG markup string (or `undefined` if

@@ -19,6 +19,15 @@ framework wrapper. For React components, see
 npm i neicon
 ```
 
+Or straight from a CDN — no build step:
+
+```html
+<script type="module">
+  import { getIcon } from 'https://cdn.jsdelivr.net/npm/neicon@0.1.0/+esm'
+  document.body.innerHTML = getIcon('check', { size: 48 })
+</script>
+```
+
 ## Usage
 
 ```js

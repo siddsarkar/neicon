@@ -17,6 +17,18 @@ npm i neicon-react
 
 Requires `react >= 18` as a peer dependency.
 
+Or straight from a CDN — no build step (esm.sh shares one React instance via `?deps`):
+
+```html
+<div id="app"></div>
+<script type="module">
+  import { createElement } from 'https://esm.sh/react@19'
+  import { createRoot } from 'https://esm.sh/react-dom@19/client'
+  import { Check } from 'https://esm.sh/neicon-react@0.1.0?deps=react@19'
+  createRoot(document.getElementById('app')).render(createElement(Check, { size: 48 }))
+</script>
+```
+
 ## Usage
 
 Import only the icons you use — the rest are tree-shaken away.

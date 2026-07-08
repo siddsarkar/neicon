@@ -16,6 +16,47 @@ npm i neicon-react
 
 `react >= 18` is a peer dependency.
 
+## Use from a CDN (no build step)
+
+For quick prototypes without a bundler, load React and the components from
+[esm.sh](https://esm.sh). Passing `?deps=react@19` makes esm.sh serve a single,
+shared React instance:
+
+```html
+<div id="app"></div>
+<script type="module">
+  import { createElement } from 'https://esm.sh/react@19'
+  import { createRoot } from 'https://esm.sh/react-dom@19/client'
+  import { Check, DownArrow } from 'https://esm.sh/neicon-react@0.1.0?deps=react@19'
+
+  createRoot(document.getElementById('app')).render(
+    createElement('div', null,
+      createElement(Check, { size: 48 }),
+      createElement(DownArrow, { size: 48, monochrome: true }),
+    ),
+  )
+</script>
+```
+
+Prefer an **import map**? Map React and load the package with
+`?external=react,react-dom` so it reuses your mapped React:
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@19",
+      "react/": "https://esm.sh/react@19/",
+      "react-dom/client": "https://esm.sh/react-dom@19/client",
+      "neicon-react": "https://esm.sh/neicon-react@0.1.0?external=react,react-dom"
+    }
+  }
+</script>
+```
+
+For anything beyond prototyping, install from npm and bundle — that way React is
+deduplicated and unused icons are tree-shaken.
+
 ## Basic usage
 
 Import only the icons you use — everything else is tree-shaken out of your bundle.
